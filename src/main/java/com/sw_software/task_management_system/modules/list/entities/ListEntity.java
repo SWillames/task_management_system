@@ -1,19 +1,23 @@
 package com.sw_software.task_management_system.modules.list.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -38,4 +42,27 @@ public class ListEntity {
   private LocalDateTime createdAt;
   @UpdateTimestamp
   private LocalDateTime updatedAt;
+
+  @OneToMany(mappedBy = "listEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  @JsonManagedReference
+  private List<ItemEntity> items = new ArrayList<>();
+
+  public void addItem(ItemEntity item) {
+    item.setListEntity(this);
+    this.items.add(item);
+  }
+
+  public void removeItem(ItemEntity item) {
+    this.items.remove(item);
+    item.setListEntity(null);
+  }
+
+//  public void setItems(Set<ItemEntity> items) {
+//    this.items.clear();
+//    if (items != null) {
+//      items.forEach(item -> item.setListEntity(this));
+//      this.items.addAll(items);
+//    }
+//  }
+
 }

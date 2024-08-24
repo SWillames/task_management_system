@@ -16,8 +16,7 @@ public class ListServiceImpl implements ListService {
 
   @Autowired
   private final ListRepository repository;
-  @Autowired
-  private ListRepository listRepository;
+
 
   @Override
   public ResponseEntity<ListEntity> createList(ListEntity list) {
@@ -39,12 +38,12 @@ public class ListServiceImpl implements ListService {
 
   @Override
   public ResponseEntity<ListEntity> updateList(Long id, ListEntity list) {
-    Optional<ListEntity> listEntity = listRepository.findById(id);
+    Optional<ListEntity> listEntity = repository.findById(id);
     if (listEntity.isPresent()) {
       ListEntity updatedList = listEntity.get();
       updatedList.setTitle(list.getTitle());
       updatedList.setDescription(list.getDescription());
-      return ResponseEntity.ok(listRepository.save(updatedList));
+      return ResponseEntity.ok(repository.save(updatedList));
     } else {
       return ResponseEntity.notFound().build();
     }
@@ -52,6 +51,6 @@ public class ListServiceImpl implements ListService {
 
   @Override
   public void deleteList(Long id) {
-    listRepository.deleteById(id);
+    repository.deleteById(id);
   }
 }

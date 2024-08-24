@@ -1,5 +1,6 @@
 package com.sw_software.task_management_system.modules.list.controller;
 
+import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
 import com.sw_software.task_management_system.modules.list.entities.ListEntity;
 import com.sw_software.task_management_system.modules.list.service.ListServiceImpl;
 import jakarta.validation.Valid;
@@ -18,8 +19,11 @@ public class ListController {
 
   private final ListServiceImpl listService;
 
-  @PostMapping("/")
+  @PostMapping
   public ResponseEntity<ListEntity> create(@Valid @RequestBody ListEntity listEntity){
+    for (ItemEntity itemEntity : listEntity.getItems()) {
+      itemEntity.setListEntity(listEntity);
+    }
     return listService.createList(listEntity);
   }
 
