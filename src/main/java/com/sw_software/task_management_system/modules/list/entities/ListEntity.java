@@ -2,6 +2,7 @@ package com.sw_software.task_management_system.modules.list.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
+import com.sw_software.task_management_system.validation.annotation.UniqueValue;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +32,7 @@ public class ListEntity {
 
   @NotNull
   @Length(min = 5, max = 50)
+  @UniqueValue(domainClass = ListEntity.class, fieldName = "title", message = "Já existe uma lista com esse titulo")
   private String title;
 
   @NotNull
@@ -56,13 +58,5 @@ public class ListEntity {
     this.items.remove(item);
     item.setListEntity(null);
   }
-
-//  public void setItems(Set<ItemEntity> items) {
-//    this.items.clear();
-//    if (items != null) {
-//      items.forEach(item -> item.setListEntity(this));
-//      this.items.addAll(items);
-//    }
-//  }
 
 }
