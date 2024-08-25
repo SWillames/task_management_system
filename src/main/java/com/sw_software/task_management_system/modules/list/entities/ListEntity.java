@@ -37,6 +37,7 @@ public class ListEntity {
   @NotNull
   @NotBlank
   @Length(min = 20, max = 400)
+  @Column(nullable = false, unique = true)
   private String description;
 
   @CreationTimestamp

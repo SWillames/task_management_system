@@ -28,6 +28,7 @@ public class ItemEntity {
 
   @NotNull
   @Length(min = 4, max = 50)
+  @Column(nullable = false, unique = true)
   private String title;
 
   @NotNull

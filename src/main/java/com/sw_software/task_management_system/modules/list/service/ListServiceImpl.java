@@ -77,7 +77,7 @@ public class ListServiceImpl implements ListService {
     }
   }
 
-  private ListEntity verifyIfExists(Long id) throws NotFoundException {
+  public ListEntity verifyIfExists(Long id) throws NotFoundException {
     Optional<ListEntity> result = repository.findById(id);
     if (result.isEmpty()) {
       throw new NotFoundException(String.format("Lista com o id %d não encontrada", id));

@@ -1,9 +1,11 @@
 package com.sw_software.task_management_system.modules.list.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sw_software.task_management_system.modules.items.dto.ItemDTO;
 import com.sw_software.task_management_system.validation.annotation.UniqueValue;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -12,8 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class ListDTO {
   private Long id;
-  @UniqueValue(domainClass = ListDTO.class, fieldName = "title", message = "Já existe uma lista com esse titulo")
   private String title;
   private String description;
   private List<ItemDTO> items;
+  @JsonIgnore
+  private LocalDateTime createdAt;
+  @JsonIgnore
+  private LocalDateTime updatedAt;
 }
