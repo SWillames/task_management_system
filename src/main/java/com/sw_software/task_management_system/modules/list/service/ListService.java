@@ -1,5 +1,6 @@
 package com.sw_software.task_management_system.modules.list.service;
 
+import com.sw_software.task_management_system.modules.list.dto.ListDTO;
 import com.sw_software.task_management_system.modules.list.entities.ListEntity;
 import org.springframework.http.ResponseEntity;
 
@@ -8,16 +9,16 @@ import java.util.Optional;
 
 public interface ListService {
 
-  ResponseEntity<ListEntity> createList(ListEntity list);
+  ResponseEntity<ListDTO> createList(ListEntity list);
 
-  ResponseEntity<List<ListEntity>> listLists();
+  ResponseEntity<List<ListDTO>> listLists();
 
-  ResponseEntity<Optional<ListEntity>> list(Long id);
+  ResponseEntity<ListDTO> list(Long id);
 
-  ResponseEntity<ListEntity> updateList(Long id, ListEntity list);
+  ResponseEntity<ListDTO> updateList(Long id, ListDTO list);
 
   void deleteList(Long id);
 
-  ResponseEntity<List<ListEntity>> filterListByTitle(String title);
-  ResponseEntity<List<ListEntity>> listsOrderedByDate();
+  ResponseEntity<List<ListDTO>> filterListByTitle(String title);
+  ResponseEntity<List<ListDTO>> listsOrderedByDate();
 }

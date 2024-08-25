@@ -32,7 +32,6 @@ public class ListEntity {
 
   @NotNull
   @Length(min = 5, max = 50)
-  @UniqueValue(domainClass = ListEntity.class, fieldName = "title", message = "Já existe uma lista com esse titulo")
   private String title;
 
   @NotNull

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ListRepository extends JpaRepository<ListEntity, Long> {
+  ListEntity findByTitle(String title);
   List<ListEntity> findByTitleContaining(String title);
 
   @Query("SELECT l FROM ListEntity l ORDER BY l.createdAt DESC")

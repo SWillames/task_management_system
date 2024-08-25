@@ -1,8 +1,10 @@
 package com.sw_software.task_management_system.modules.items.controller;
 
+import com.sw_software.task_management_system.modules.items.dto.ItemDTO;
 import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
 import com.sw_software.task_management_system.modules.items.enums.Estate;
 import com.sw_software.task_management_system.modules.items.service.ItemServiceImpl;
+import com.sw_software.task_management_system.modules.list.dto.ListDTO;
 import com.sw_software.task_management_system.modules.list.entities.ListEntity;
 import com.sw_software.task_management_system.modules.list.service.ListServiceImpl;
 import jakarta.validation.Valid;
@@ -23,30 +25,31 @@ public class ItemController {
   private final ListServiceImpl listService;
 
   @GetMapping("/list/{listEntityId}")
-  public ResponseEntity<List<ItemEntity>> getItemsForList(@PathVariable Long listEntityId) {
+  public ResponseEntity<List<ItemDTO>> getItemsForList(@PathVariable Long listEntityId) {
     return itemService.getItemForList(listEntityId);
   }
 
   @GetMapping
-  public ResponseEntity<List<ItemEntity>> getItems() {
+  public ResponseEntity<List<ItemDTO>> getItems() {
     return itemService.getAllItems();
   }
 
   @PostMapping("/list/{listEntityId}")
-  public ResponseEntity<ItemEntity> createItem(@PathVariable Long listEntityId, @RequestBody ItemEntity itemEntity) {
-    ResponseEntity<Optional<ListEntity>> list = listService.list(listEntityId);
-    itemEntity.setListEntity(list.getBody().get());
+  public ResponseEntity<ItemDTO> createItem(@PathVariable Long listEntityId, @RequestBody ItemDTO itemEntity) {
+    ResponseEntity<ListDTO> list = listService.list(listEntityId);
+
+    itemEntity.setListDTO(list.getBody());
     return itemService.createItem(itemEntity);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Optional<ItemEntity>> getItemById(@PathVariable Long id) {
+  public ResponseEntity<ItemDTO> getItemById(@PathVariable Long id) {
     return itemService.getItemById(id);
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ItemEntity> updateItem(@PathVariable Long id, @Valid @RequestBody ItemEntity itemEntity) {
-    return itemService.updateItem(id, itemEntity);
+  public ResponseEntity<ItemDTO> updateItem(@PathVariable Long id, @Valid @RequestBody ItemDTO itemDTO) {
+    return itemService.updateItem(id, itemDTO);
   }
 
   @DeleteMapping("/{id}")
@@ -55,12 +58,12 @@ public class ItemController {
   }
 
   @GetMapping("/list/{listEntityId}/prioritized")
-  public ResponseEntity<List<ItemEntity>> getPrioritizedItems(@PathVariable Long listEntityId) {
+  public ResponseEntity<List<ItemDTO>> getPrioritizedItems(@PathVariable Long listEntityId) {
     return itemService.getPrioritizedItem(listEntityId);
   }
 
   @PatchMapping("/{id}/state")
-  public ResponseEntity<ItemEntity> updateState(@PathVariable Long id, @RequestParam Estate estate) {
+  public ResponseEntity<ItemDTO> updateState(@PathVariable Long id, @RequestParam Estate estate) {
     return itemService.updateItemState(id, estate);
   }
 
