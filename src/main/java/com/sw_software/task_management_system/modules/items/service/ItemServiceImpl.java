@@ -1,6 +1,7 @@
 package com.sw_software.task_management_system.modules.items.service;
 
 import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
+import com.sw_software.task_management_system.modules.items.enums.Estate;
 import com.sw_software.task_management_system.modules.items.repository.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,18 @@ public class ItemServiceImpl implements ItemService {
   public ResponseEntity<List<ItemEntity>> getItemForList(Long id) {
     var result = itemRepository.findByListEntityId(id);
     return ResponseEntity.ok(result);
+  }
+
+  @Override
+  public ResponseEntity<List<ItemEntity>> getPrioritizedItem(Long listId) {
+    var result = itemRepository.findPrioritizedItems(listId);
+    return ResponseEntity.ok(result);
+  }
+
+  @Override
+  public ResponseEntity<ItemEntity> updateItemState(Long id, Estate estate) {
+    var itemEntity = itemRepository.findById(id);
+    itemEntity.get().setEstate(estate);
+    return ResponseEntity.ok(itemRepository.save(itemEntity.get()));
   }
 }

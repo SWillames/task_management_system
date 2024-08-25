@@ -1,6 +1,7 @@
 package com.sw_software.task_management_system.modules.items.service;
 
 import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
+import com.sw_software.task_management_system.modules.items.enums.Estate;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface ItemService {
   public void deleteItem(Long id);
 
   public ResponseEntity<List<ItemEntity>> getItemForList(Long id);
+
+  ResponseEntity<List<ItemEntity>> getPrioritizedItem(Long listId);
+
+  ResponseEntity<ItemEntity> updateItemState(Long id, Estate estate);
 }
