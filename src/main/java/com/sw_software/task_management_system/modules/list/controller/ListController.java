@@ -46,4 +46,14 @@ public class ListController {
   public void delete(@PathVariable Long id){
     listService.deleteList(id);
   }
+
+  @GetMapping("/filter")
+  public ResponseEntity<List<ListEntity>> filterByTitle(@RequestParam String title){
+    return listService.filterListByTitle(title);
+  }
+
+  @GetMapping("/ordered")
+  public ResponseEntity<List<ListEntity>> getOrderedLists(){
+    return listService.listsOrderedByDate();
+  }
 }

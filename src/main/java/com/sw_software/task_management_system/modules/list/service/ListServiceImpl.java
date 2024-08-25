@@ -53,4 +53,16 @@ public class ListServiceImpl implements ListService {
   public void deleteList(Long id) {
     repository.deleteById(id);
   }
+
+  @Override
+  public ResponseEntity<List<ListEntity>> filterListByTitle(String title) {
+    var result = repository.findByTitleContaining(title);
+    return ResponseEntity.ok(result);
+  }
+
+  @Override
+  public ResponseEntity<List<ListEntity>> listsOrderedByDate() {
+    var result = repository.findAllOrderByCreatedAtDesc();
+    return ResponseEntity.ok(result);
+  }
 }
