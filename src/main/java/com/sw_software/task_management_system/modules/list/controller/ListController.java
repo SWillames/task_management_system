@@ -1,10 +1,12 @@
 package com.sw_software.task_management_system.modules.list.controller;
 
 import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
+import com.sw_software.task_management_system.modules.list.dto.ListDTO;
 import com.sw_software.task_management_system.modules.list.entities.ListEntity;
 import com.sw_software.task_management_system.modules.list.service.ListServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,8 @@ import java.util.Optional;
 public class ListController {
 
   private final ListServiceImpl listService;
-
   @PostMapping
-  public ResponseEntity<ListEntity> create(@Valid @RequestBody ListEntity listEntity){
+  public ResponseEntity<ListDTO> create(@Valid @RequestBody ListEntity listEntity){
     for (ItemEntity itemEntity : listEntity.getItems()) {
       itemEntity.setListEntity(listEntity);
     }
@@ -28,18 +29,18 @@ public class ListController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ListEntity>> getAll(){
+  public ResponseEntity<List<ListDTO>> getAll(){
     return listService.listLists();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Optional<ListEntity>> getById(@PathVariable Long id){
+  public ResponseEntity<ListDTO> getById(@PathVariable Long id){
     return listService.list(id);
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ListEntity> update(@PathVariable Long id, @Valid @RequestBody ListEntity listEntity){
-    return listService.updateList(id, listEntity);
+  public ResponseEntity<ListDTO> update(@PathVariable Long id, @Valid @RequestBody ListDTO listDTO){
+    return listService.updateList(id, listDTO);
   }
 
   @DeleteMapping("/{id}")
@@ -48,12 +49,12 @@ public class ListController {
   }
 
   @GetMapping("/filter")
-  public ResponseEntity<List<ListEntity>> filterByTitle(@RequestParam String title){
+  public ResponseEntity<List<ListDTO>> filterByTitle(@RequestParam String title){
     return listService.filterListByTitle(title);
   }
 
   @GetMapping("/ordered")
-  public ResponseEntity<List<ListEntity>> getOrderedLists(){
+  public ResponseEntity<List<ListDTO>> getOrderedLists(){
     return listService.listsOrderedByDate();
   }
 }

@@ -9,9 +9,13 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
 
+  ItemEntity findByTitle(String title);
   List<ItemEntity> findByListEntityIdAndEstate(Long listId, Estate estate);
   List<ItemEntity> findByListEntityId(Long listId);
 
   @Query("SELECT i FROM ItemEntity i WHERE i.listEntity.id = :listId ORDER BY i.priority DESC, i.createdAt ASC ")
   List<ItemEntity> findPrioritizedItems(Long listId);
+
+
+
 }

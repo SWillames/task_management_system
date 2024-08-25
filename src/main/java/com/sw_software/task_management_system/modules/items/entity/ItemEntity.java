@@ -28,7 +28,6 @@ public class ItemEntity {
 
   @NotNull
   @Length(min = 4, max = 50)
-  @UniqueValue(domainClass = ItemEntity.class, fieldName = "title", message = "Já existe uma item com esse titulo")
   private String title;
 
   @NotNull
