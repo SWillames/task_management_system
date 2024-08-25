@@ -38,7 +38,7 @@ public class ListController {
     return listService.list(id);
   }
 
-  @PatchMapping("/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<ListDTO> update(@PathVariable Long id, @Valid @RequestBody ListDTO listDTO){
     return listService.updateList(id, listDTO);
   }

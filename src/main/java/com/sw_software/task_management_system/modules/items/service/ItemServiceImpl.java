@@ -62,7 +62,8 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public ResponseEntity<List<ItemDTO>> getItemForList(Long id) {
-    var result = itemRepository.findByListEntityId(id);
+    ListEntity listEntity = verifyIfListExists(id);
+    var result = itemRepository.findByListEntityId(listEntity.getId());
     return ResponseEntity.ok(convertToItemsDTOResponse(result));
   }
 
@@ -92,6 +93,16 @@ public class ItemServiceImpl implements ItemService {
     if (result.isEmpty()) {
       throw new NotFoundException(String.format("Item com o id %d não encontrado", id));
     }
+    return result.get();
+  }
+
+  private ListEntity verifyIfListExists(Long id) throws NotFoundException {
+    Optional<ListEntity> result = itemRepository.findListEntityById(id);
+
+    if (result.isEmpty()) {
+      throw new NotFoundException(String.format("Lista com o id %d não encontrada", id));
+    }
+
     return result.get();
   }
 

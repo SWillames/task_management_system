@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ItemDTO {
   private Long id;
-  @UniqueValue(domainClass = ListDTO.class, fieldName = "title", message = "Já existe uma item com esse titulo")
   private String title;
   private String description;
   private Estate estate;
