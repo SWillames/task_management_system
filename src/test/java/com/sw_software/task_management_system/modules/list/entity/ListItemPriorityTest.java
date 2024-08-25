@@ -2,7 +2,9 @@ package com.sw_software.task_management_system.modules.list.entity;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import com.sw_software.task_management_system.converter.MapperConverter;
 import com.sw_software.task_management_system.modules.items.dto.ItemDTO;
+import com.sw_software.task_management_system.modules.items.entity.ItemEntity;
 import com.sw_software.task_management_system.modules.list.dto.ListDTO;
 import org.junit.Before;
 import org.junit.Test;

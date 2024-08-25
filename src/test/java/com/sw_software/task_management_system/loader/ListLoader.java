@@ -17,13 +17,13 @@ public class ListLoader implements TemplateLoader {
       add("title", random("Shopping List", "Test List", "Test List with Multiple Items", "Sample List"));
       add("description", random("A sample description for testing", "Test description of a list with multiple items",
           "Test description of the list"   ));
-      add("items", has(2).of(ItemDTO.class, "itemValid"));
+      add("items", has(4).of(ItemDTO.class, "itemValid"));
 
     }});
 
     Fixture.of(ItemDTO.class).addTemplate("itemValid", new Rule() {{
       add("id", random(Long.class, range(MIN_RANGE_ID, MAX_RANGE_ID)));
-      add("title", random("Test Item 1", "Test Item 2",  "Test Item 3",
+      add("title", random("Test Item 1", "Test Item 2", "Test Item 3",
           "Test Item 4", "First Item", "Second Item", "Third Item"));
       add("description", random("Description of the first item",
           "Description of the second item", "Description of the third item",

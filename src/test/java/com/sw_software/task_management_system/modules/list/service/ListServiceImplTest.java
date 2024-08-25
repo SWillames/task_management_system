@@ -60,7 +60,6 @@ public class ListServiceImplTest {
     ResponseEntity<ListDTO> createdListDTO = listService.createList(expectedSaved);
 
     assertThat(createdListDTO.getStatusCode(), is(equalTo(HttpStatus.OK)));
-//    assertThat(createdListDTO.getBody(), is(equalTo(expectedListDTO.)));
     assertThat(createdListDTO.getBody().getId(), is(equalTo(expectedSaved.getId())));
     assertThat(createdListDTO.getBody().getTitle(), is(equalTo(expectedListDTO.getTitle())));
     assertThat(createdListDTO.getBody().getDescription(), is(equalTo(expectedListDTO.getDescription())));
@@ -88,16 +87,13 @@ public class ListServiceImplTest {
     ListDTO expectedListDTO = Fixture.from(ListDTO.class).gimme("valid");
     ListEntity expectedSaved = modelMapper.map(expectedListDTO, ListEntity.class);
 
-    // Simula o comportamento do repositório para retornar uma lista com base no filtro de título
     when(listRepository.findByTitleContaining(titleFilter))
         .thenReturn(Collections.singletonList(expectedSaved));
 
-    // Chama o método a ser testado
     ResponseEntity<List<ListDTO>> filteredListDTO = listService.filterListByTitle(titleFilter);
 
-    // Verifica se o status da resposta é OK
     assertThat(filteredListDTO.getStatusCode(), is(equalTo(HttpStatus.OK)));
-    // Verifica se o corpo da resposta contém os dados esperados
+
     assertThat(filteredListDTO.getBody(), is(not(empty())));
     assertThat(filteredListDTO.getBody().get(0).getDescription(), is(equalTo(expectedListDTO.getDescription())));
     assertThat(filteredListDTO.getBody().get(0).getTitle(), is(equalTo(expectedListDTO.getTitle())));
@@ -106,31 +102,23 @@ public class ListServiceImplTest {
   @Test
   @DisplayName("It should return lists ordered by creation date")
   void when_lists_ordered_by_date_is_called() {
-    // Criar duas instâncias de ListDTO com datas de criação diferentes
     ListDTO dto1 = Fixture.from(ListDTO.class).gimme("valid");
     ListDTO dto2 = Fixture.from(ListDTO.class).gimme("valid");
 
-    // Simular datas diferentes
     dto1.setCreatedAt(LocalDateTime.now().minusDays(1)); // Data mais antiga
     dto2.setCreatedAt(LocalDateTime.now()); // Data mais recente
 
-    // Mapear DTOs para entidades
     ListEntity entity1 = modelMapper.map(dto1, ListEntity.class);
     ListEntity entity2 = modelMapper.map(dto2, ListEntity.class);
 
-    // Criar uma lista com as entidades em ordem de criação
     List<ListEntity> ListEntities = Arrays.asList(entity1, entity2);
 
-    // Simular o comportamento do repositório para retornar a lista ordenada por data
     when(listRepository.findAllOrderByCreatedAtDesc()).thenReturn(ListEntities);
 
-    // Chamar o método a ser testado
     ResponseEntity<List<ListDTO>> orderedListDTO = listService.listsOrderedByDate();
 
-    // Verificar se o status da resposta é OK
     assertThat(orderedListDTO.getStatusCode(), is(equalTo(HttpStatus.OK)));
 
-    // Verificar se o corpo da resposta contém os dados esperados
     List<ListDTO> responseBody = orderedListDTO.getBody();
     assertThat(responseBody, is(not(empty())));
 
